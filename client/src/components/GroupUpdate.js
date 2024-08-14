@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
-function Update() {
+function GroupUpdate() {
   const [id, setId] = useState("")
   const [name, setName] = useState("")
   const [producer, setProducer] = useState("")
@@ -17,15 +17,15 @@ function Update() {
       producer:producer,
       category:category
     }
-    axios.post('/update',body).then(response=>{
-      navigation('/')
+    axios.post('/group/update',body).then(response=>{
+      navigation('/group')
     });
   }
   useEffect(() => {
     const body = {
       id:updateId
     }
-    axios.post('/api', body).then(response=>{
+    axios.post('/group/api', body).then(response=>{
       let data = response.data.data[0]
       setId(data.id)
       setName(data.name)
@@ -51,10 +51,13 @@ function Update() {
                   </button>
                 </div>
               </div>
+              <Link to={"/group"} state={{}}>
+                Back
+              </Link>
             </>
           )}
     </>
   )
 }
 
-export default Update
+export default GroupUpdate

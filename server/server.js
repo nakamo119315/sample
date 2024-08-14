@@ -39,18 +39,18 @@ async function deleteGroup(body){
   await sql`DELETE FROM ideal.group WHERE id=${body.id}`;
 }
 
-app.get("/api", (req, res) => {
+app.get("/group/api", (req, res) => {
     selectGroup().then(function(result){
         res.json({data: result})
     })
 })
-app.post("/api", (req, res) => {
+app.post("/group/api", (req, res) => {
   selectGroupWhereId(req.body.id).then(function(result){
       res.json({data: result})
   })
 })
 
-app.post("/register", (req, res) => {
+app.post("/group/register", (req, res) => {
   insertGroup(req.body).then(function(){
     selectGroup().then(function(result){
       res.json({data: result})
@@ -58,7 +58,7 @@ app.post("/register", (req, res) => {
   })
 })
 
-app.post("/update", (req, res) => {
+app.post("/group/update", (req, res) => {
   updateGroup(req.body).then(function(){
     selectGroup().then(function(result){
       res.json({data: result})
@@ -66,7 +66,7 @@ app.post("/update", (req, res) => {
   })
 })
 
-app.post("/delete", (req, res) => {
+app.post("/group/delete", (req, res) => {
   deleteGroup(req.body).then(function(){
     selectGroup().then(function(result){
       res.json({data: result})

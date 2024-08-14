@@ -1,17 +1,19 @@
 import React from 'react'
 import Home from './components/Home'
-import Register from './components/Register'
-import Update from './components/Update'
+import GroupHome from './components/GroupHome'
+import GroupRegister from './components/GroupRegister'
+import GroupUpdate from './components/GroupUpdate'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <Routes >
+        <Routes>
           <Route exact path='/' element={<Home />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/update' element={<Update />} />
+          <Route path='/group' element={<GroupHome />} />
+          <Route path='/group/register' element={<GroupRegister />} />
+          <Route path='/group/update' element={<GroupUpdate />} />
         </Routes>
       </BrowserRouter>
     </div>

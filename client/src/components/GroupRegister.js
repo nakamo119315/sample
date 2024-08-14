@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-function Register() {
+function GroupRegister() {
   const [name, setName] = useState("")
   const [producer, setProducer] = useState("")
   const [category, setCategory] = useState("")
@@ -14,8 +14,8 @@ function Register() {
       category:category
     }
     console.log(body)
-    axios.post('/register',body).then(response=>{
-      navigation('/')
+    axios.post('/group/register',body).then(response=>{
+      navigation('/group')
     });
   }
   return (
@@ -29,10 +29,13 @@ function Register() {
         <button onClick={registGroup}>
           登録
         </button>
+        <Link to={"/group"} state={{}}>
+          Back
+        </Link>
       </div>
 
     </div>
   )
 }
 
-export default Register
+export default GroupRegister

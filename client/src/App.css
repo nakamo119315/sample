@@ -8,3 +8,8 @@ button.link-style-btn:hover{
   text-decoration: underline;
   color: #002080;
 }
+.youtube {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+}

@@ -7,6 +7,15 @@ function Home() {
       <Link to={"/group"} state={{}}>
         Group
       </Link>
+      <br/>
+      <Link to={"/youtube"} state={{}}>
+        Youtube
+      </Link>
+      <br/>
+      <Link to={"/member"} state={{}}>
+        Member
+      </Link>
+      <br/>
     </>
   )
 }

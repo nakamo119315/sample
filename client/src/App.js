@@ -10,6 +10,8 @@ import YoutubeViewer from './components/YoutubeViewer'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import MemberHome from './components/MemberHome'
 import MemberRegister from './components/MemberRegister'
+import MemberUpdate from './components/MemberUpdate'
+import Material from './components/Material'
 
 function App() {
   return (
@@ -17,8 +19,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route exact path='/' element={<Home />} />
+          <Route path='/material' element={<Material />} />
           <Route path='/member' element={<MemberHome />} />
           <Route path='/member/register' element={<MemberRegister />} />
+          <Route path='/member/update' element={<MemberUpdate />} />
           <Route path='/group' element={<GroupHome />} />
           <Route path='/group/register' element={<GroupRegister />} />
           <Route path='/group/update' element={<GroupUpdate />} />

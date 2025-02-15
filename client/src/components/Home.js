@@ -16,6 +16,10 @@ function Home() {
         Member
       </Link>
       <br/>
+      <Link to={"/material"}>
+        Material
+      </Link>
+      <br/>
     </>
   )
 }

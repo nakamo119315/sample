@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
@@ -22,70 +22,79 @@ const MenuProps = {
 
 function MemberRegister() {
   const [backendData, setBackendData] = useState({ data: [] });
+  const [id, setId] = useState("")
   const [name, setName] = useState("");
-  const [group_id, setGroupId] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
   const [error, setError] = useState(null);
   const navigation = useNavigate();
-  const theme = createTheme();
+  const theme = createTheme(); // デフォルトテーマ
+  const location = useLocation();
+  const updateId = location?.state?.id;
 
   const handleChange = (event) => {
     const selected = event.target.value;
     setSelectedOption(selected);
-    setGroupId(selected);
     console.log(`Option selected:`, selected);
   };
 
-  function registMember() {
-    if (!name || !group_id) {
+  function updateMember() {
+    if (!name || !selectedOption) {
       setError("名前とグループは必須です");
       return;
     }
 
     const body = {
+      id: id,
       name: name,
-      group_id: group_id
+      group_id: selectedOption
     };
     
     console.log(body);
     
-    axios.post('/member/register', body)
+    axios.post('/member/update', body)
       .then(response => {
         navigation('/member');
       })
       .catch(error => {
-        console.error("メンバー登録中にエラーが発生しました:", error);
-        setError("メンバー登録中にエラーが発生しました");
+        console.error("メンバー更新中にエラーが発生しました:", error);
+        setError("メンバー更新中にエラーが発生しました");
       });
   }
 
   useEffect(() => {
-    console.log("useEffect is triggered");
-    fetch("/member/group")
-      .then(response => response.json())
-      .then(data => {
-        console.log('Fetched group data:', data);
-        setBackendData(data);
+    const body = {
+      id:updateId
+    }
+    axios.post('/member/api', body).then(response=>{
+        console.log(response.data)
+        let data = response.data.data[0]
+        setId(data.id)
+        setName(data.name)
+        setSelectedOption(data.group_id)
       })
+      .then(fetch("/member/group")
+        .then(response => response.json())
+        .then(data => {
+          console.log('Fetched group data:', data);
+          setBackendData(data);
+      }))
       .catch(error => {
-        console.error("グループデータの取得中にエラーが発生しました:", error);
-        setError("グループデータの取得中にエラーが発生しました");
+        console.error("メンバーデータの取得中にエラーが発生しました:", error);
+        setError("メンバーデータの取得中にエラーが発生しました");
       });
-  }, []);
+  }, [updateId]);
 
   return (
     <ThemeProvider theme={theme}>
       <div>
         <div>
-          <TextField 
-            sx={{ mt: 2 }}
+          <TextField
             id="name"
             label="名前"
-            defaultValue={name}
+            value={name}
             onChange={(e) => setName(e.target.value)}
           />
           <Select
-            sx={{ mt: 2 }}
             value={selectedOption}
             onChange={handleChange}
             displayEmpty
@@ -108,16 +117,14 @@ function MemberRegister() {
         
         {error && <div style={{ color: 'red' }}>{error}</div>}
         
-        <div>
-          <Stack spacing={2} direction="row">
-            <Button variant="outlined" onClick={()=>registMember()}>
-              登録
-            </Button>
-            <Button variant="outlined" onClick={()=>navigation("/member")} state={{}}>
-              戻る
-            </Button>
-          </Stack>
-        </div>
+        <Stack spacing={2} direction="row">
+          <Button variant="outlined" onClick={()=>updateMember()}>
+            更新
+          </Button>
+          <Button variant="outlined" onClick={()=>navigation("/member")} state={{}}>
+            戻る
+          </Button>
+        </Stack>
       </div>
     </ThemeProvider>
   );

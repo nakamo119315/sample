@@ -1,13 +1,3 @@
-button.link-style-btn{
-  cursor: pointer;
-  border: none;
-  background: none;
-  color: #0033cc;
-}
-button.link-style-btn:hover{
-  text-decoration: underline;
-  color: #002080;
-}
 .youtube {
   position: relative;
   width: 100%;

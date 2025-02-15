@@ -28,7 +28,7 @@ async function selectMember(){
 }
 
 async function selectMemberWhereId(id){
-    const result = await sql`SELECT member.id, member.name, ideal.group.name as group_name FROM ideal.member INNER JOIN ideal.group ON member.group_id = ideal.group.id Where member.id = ${id};`;
+    const result = await sql`SELECT member.id, member.name, member.group_id as group_id FROM ideal.member Where member.id = ${id};`;
     return result
 }
 

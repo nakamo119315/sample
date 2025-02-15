@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+import TextField from '@mui/material/TextField';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
 
 function GroupUpdate() {
   const [id, setId] = useState("")
@@ -10,6 +14,7 @@ function GroupUpdate() {
   const navigation = useNavigate()
   const location = useLocation();
   const updateId = location?.state?.id;
+  const theme = createTheme(); // デフォルトテーマ
   function updateGroup(){
     const body = {
       id:id,
@@ -39,21 +44,38 @@ function GroupUpdate() {
           <p>Loading...</p>
           ): (
             <>
-              <div>
+              <ThemeProvider theme={theme}>
                 <div>
-                    <input name="name" placeholder="name" value={name} onChange={(e) => setName(e.target.value)}/>
-                    <input name="producer" placeholder="producer" value={producer} onChange={(e) => setProducer(e.target.value)}/>
-                    <input name="category" placeholder="category" value={category} onChange={(e) => setCategory(e.target.value)}/>
+                  <TextField
+                    id="name"
+                    label="名前"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <TextField
+                    id="producer"
+                    label="プロデューサ"
+                    value={producer}
+                    onChange={(e) => setProducer(e.target.value)}
+                  />
+                  <TextField
+                    id="category"
+                    label="カテゴリ"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                  />
                 </div>
                 <div>
-                  <button onClick={updateGroup}>
-                   更新 
-                  </button>
+                  <Stack spacing={2} direction="row">
+                    <Button variant="outlined" onClick={()=>updateGroup()}>
+                      更新 
+                    </Button>
+                    <Button variant="outlined" onClick={()=>navigation("/group")} state={{}}>
+                      戻る
+                    </Button>
+                  </Stack>
                 </div>
-              </div>
-              <Link to={"/group"} state={{}}>
-                Back
-              </Link>
+              </ThemeProvider>
             </>
           )}
     </>
